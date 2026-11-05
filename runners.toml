@@ -1,0 +1,7 @@
+[[Runners]]
+ID = "transcode"
+RunnerURL = "http://127.0.0.1:9000"
+App = "transcode"
+Mode = "persistent"
+Status = "ready"
+Capacity = 2

@@ -1,0 +1,7 @@
+# Offchain orchestrator with one static runner on this machine.
+Listen = "127.0.0.1:8935"
+MetricsListen = "127.0.0.1:8936"
+ServiceURL = "http://127.0.0.1:8935"
+RunnerConfig = "runners.toml"
+RunnerGrants = ["127.0.0.1"]
+DataDir = "data"
