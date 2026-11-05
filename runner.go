@@ -28,7 +28,11 @@ func session(r *http.Request) *job {
 	defer mu.Unlock()
 	id := r.Header.Get("Livepeer-Session-Id")
 	if jobs[id] == nil {
-		cmd := exec.Command("ffmpeg", "-loglevel", "error", "-i", "pipe:0", "-map", "0:v", "-map", "0:v",
+		// low_delay turns off frame-threaded decoding, which held back 15 frames (500 ms) on a
+		// 32-core machine. The small probe starts decoding on the first frames.
+		cmd := exec.Command("ffmpeg", "-loglevel", "error",
+			"-flags", "low_delay", "-probesize", "32", "-analyzeduration", "0", "-i", "pipe:0",
+			"-map", "0:v", "-map", "0:v",
 			"-c:v", "libx264", "-preset", "ultrafast", "-tune", "zerolatency",
 			"-s:v:0", "1280x720", "-s:v:1", "640x360", "-f", "matroska", "pipe:1")
 		cmd.Stderr = os.Stderr
